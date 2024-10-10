@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Adivinanzas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input {
+            padding: 10px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Adivina el Número</h1>
+    <p>Estoy pensando en un número entre 1 y 10.</p>
+    <input type="number" id="guess" min="1" max="10" placeholder="Escribe tu número" />
+    <button onclick="checkGuess()">Adivinar</button>
+    <button onclick="resetGame()" style="display: none;" id="playAgain">Jugar de Nuevo</button>
+    <p id="result"></p>
+    <p id="attempts"></p>
+
+    <script>
+        let randomNumber = Math.floor(Math.random() * 10) + 1;
+        let attempts = 0;
+
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById('guess').value);
+            const resultElement = document.getElementById('result');
+            const attemptsElement = document.getElementById('attempts');
+            const playAgainButton = document.getElementById('playAgain');
+
+            if (isNaN(userGuess)) {
+                resultElement.textContent = "Por favor, ingresa un número.";
+                return;
+            }
+
+            attempts++; // Incrementar el contador de intentos
+
+            if (userGuess === randomNumber) {
+                resultElement.textContent = "¡Correcto! El número era " + randomNumber + ". 🎉";
+                attemptsElement.textContent = "Número de intentos: " + attempts;
+                playAgainButton.style.display = 'inline'; // Mostrar botón de jugar de nuevo
+            } else if (userGuess < 1 || userGuess > 10) {
+                resultElement.textContent = "Por favor, elige un número entre 1 y 10.";
+            } else {
+                resultElement.textContent = "Incorrecto. Intenta de nuevo.";
+                attemptsElement.textContent = "Número de intentos: " + attempts;
+            }
+        }
+
+        function resetGame() {
+            randomNumber = Math.floor(Math.random() * 10) + 1; // Generar un nuevo número
+            document.getElementById('guess').value = ''; // Limpiar la entrada
+            document.getElementById('result').textContent = ''; // Limpiar resultado
+            document.getElementById('attempts').textContent = ''; // Limpiar intentos
+            document.getElementById('playAgain').style.display = 'none'; // Ocultar botón de jugar de nuevo
+            attempts = 0; // Reiniciar el contador de intentos
+        }
+    </script>
+</body>
+</html>
