@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego de Adivinanzas</title>
+    <title>Juego de Adivinanza</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,60 +12,56 @@
         }
         input {
             padding: 10px;
-            margin-top: 10px;
+            margin: 10px;
+            width: 50px;
+            background-color: red; /* Cambia el color de fondo a rojo */
+            color: white; /* Cambia el color del texto a blanco para mejor contraste */
+            border: none; /* Opcional: elimina el borde */
+            border-radius: 5px; /* Opcional: bordes redondeados */
         }
         button {
             padding: 10px 20px;
-            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Te dasafío a adivinar el número que estoy pensando</h1>
-    <p>Tal vez estoy pensando en un número entre 1 y 10.</p>
-    <input type="number" id="guess" min="1" max="10" placeholder="Escribe tu número" />
+
+    <h1>Juego de Adivinanza</h1>
+    <p>Estoy pensando en un número entre 1 y 100.</p>
+    <input type="number" id="guess" placeholder="Tu adivinanza" min="1" max="100">
     <button onclick="checkGuess()">Adivinar</button>
-    <button onclick="resetGame()" style="display: none;" id="playAgain">¡Puedes jugar de nuevo!</button>
+
     <p id="result"></p>
-    <p id="attempts"></p>
+    <button onclick="resetGame()" style="display: none;" id="resetButton">Jugar de nuevo</button>
 
     <script>
-        let randomNumber = Math.floor(Math.random() * 10) + 1;
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
         let attempts = 0;
 
         function checkGuess() {
-            const userGuess = parseInt(document.getElementById('guess').value);
-            const resultElement = document.getElementById('result');
-            const attemptsElement = document.getElementById('attempts');
-            const playAgainButton = document.getElementById('playAgain');
-
-            if (isNaN(userGuess)) {
-                resultElement.textContent = "Por favor, ingresa un número.";
-                return;
-            }
-
-            attempts++; // Incrementar el contador de intentos
+            const userGuess = parseInt(document.getElementById("guess").value);
+            const result = document.getElementById("result");
+            attempts++;
 
             if (userGuess === randomNumber) {
-                resultElement.textContent = "¡Correcto! El número era " + randomNumber + ". 🎉";
-                attemptsElement.textContent = "Número de intentos: " + attempts;
-                playAgainButton.style.display = 'inline'; // Mostrar botón de jugar de nuevo
-            } else if (userGuess < 1 || userGuess > 10) {
-                resultElement.textContent = "Por favor, elige un número entre 1 y 10.";
-            } else {
-                resultElement.textContent = "Incorrecto. Intenta de nuevo.";
-                attemptsElement.textContent = "Número de intentos: " + attempts;
+                result.textContent = ¡Correcto! El número era ${randomNumber}. Lo adivinaste en ${attempts} intentos.;
+                document.getElementById("resetButton").style.display = 'block';
+            } else if (userGuess < randomNumber) {
+                result.textContent = "Demasiado bajo. Intenta de nuevo.";
+            } else if (userGuess > randomNumber) {
+                result.textContent = "Demasiado alto. Intenta de nuevo.";
             }
+
+            document.getElementById("guess").value = '';
         }
 
         function resetGame() {
-            randomNumber = Math.floor(Math.random() * 10) + 1; // Generar un nuevo número
-            document.getElementById('guess').value = ''; // Limpiar la entrada
-            document.getElementById('result').textContent = ''; // Limpiar resultado
-            document.getElementById('attempts').textContent = ''; // Limpiar intentos
-            document.getElementById('playAgain').style.display = 'none'; // Ocultar botón de jugar de nuevo
-            attempts = 0; // Reiniciar el contador de intentos
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            document.getElementById("result").textContent = '';
+            document.getElementById("resetButton").style.display = 'none';
         }
     </script>
+
 </body>
 </html>
